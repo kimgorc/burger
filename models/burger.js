@@ -1,5 +1,7 @@
+//require the orm file
 var orm= require ("../config/orm.js");
 
+//set burger to be able to reach all items, update and create
 var burger = {
   all: function(cb) {
     orm.all("burgers", function(res) {

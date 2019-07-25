@@ -1,3 +1,4 @@
+//establishing express connection
 var express = require("express");
 
 var router = express.Router();
@@ -10,58 +11,35 @@ router.get("/", function(req, res) {
     res.redirect("/burgers");
   });
 
+//get route for all burgerData
 router.get("/burgers", function(req, res) {
-  // express callback response by calling burger.selectAllBurger
-  burger.update(function(burgerData) {
-    // wrapper for orm.js that using MySQL query callback will return burger_data, render to index with handlebar
+  // express callback response by calling all burgerData
+  burger.all(function(burgerData) {
     res.render("index", { burger_data: burgerData });
   });
 });
 
-// post route -> back to index
+// post route for burger_name
 router.post("/burgers/create", function(req, res) {
-  // takes the request object using it as input for burger.addBurger
-  burger.create(req.body.burger_name, function(result) {
-    // wrapper for orm.js that using MySQL insert callback will return a log to console,
-    // render back to index with handle
+  burger.create(
+    req.body.burger_name, function(result) {
+    // console log the results
     console.log(result);
+    //redirect user to / (burger page)
     res.redirect("/");
   });
 });
 
 
-
+// put route for the burger id
 router.put("/burgers/:id", function(req, res) {
-  var condition = "id = " + req.params.id;
-
-  console.log("condition", condition);
-
-  burger.update({
-    devoured: req.body.devoured
-  }, condition, function(result) {
-    if (result.changedRows == 0) {
-      // If no rows were changed, then the ID does not exist, so 404
-      return res.status(404).end();
-    } else {
-      res.status(200).end();
-    }
-  });
-});
-
-router.delete("/burgers/:id", function(req, res) {
-  var condition = "id = " + req.params.id;
-
-  console.log("condition", condition);
-
-  burger.delete(
-    condition, function(result) {
-    if (result.changedRows == 0) {
-      // If no rows were changed, then the ID must not exist, so 404
-      return res.status(404).end();
-    } else {
-      res.status(200).end();
-    }
-  });
+  burger.update(
+    req.params.id, function(result) {
+    //console log results
+    console.log(result);
+    //send back responses
+    res.sendStatus(200);
+    });
 });
 
 // Export routes for server.js to use.
