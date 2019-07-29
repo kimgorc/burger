@@ -13,7 +13,7 @@ function printQuestionMarks(num) {
 //function sending the object to the mysql database
 function objToSql(ob) {
   var arr = [];
-  
+
   for (var key in ob) {
     arr.push(key + "=" + ob[key]);
   }
@@ -21,7 +21,7 @@ function objToSql(ob) {
 }
 
 var orm = {
-  all: function(tableInput, cb) {
+  selectAll: function(tableInput, cb) {
     var queryString = "SELECT * FROM " + tableInput + ";";
     connection.query(queryString, function(err, result) {
       if (err) {
@@ -33,7 +33,7 @@ var orm = {
 
   // valuess being saved into the table columns
  
-  create: function(table, cols, vals, cb) {
+  insertOne: function(table, cols, vals, cb) {
     var queryString = "INSERT INTO " + table;
 
     queryString += " (";
@@ -55,7 +55,7 @@ var orm = {
 
   // updating the values in the colomns
 
-  update: function(table, objColVals, condition, cb) {
+  updateOne: function(table, objColVals, condition, cb) {
     var queryString = "UPDATE " + table;
 
     queryString += " SET ";
