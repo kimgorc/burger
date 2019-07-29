@@ -3,6 +3,7 @@ var connection = require("./connection");
 //printing question mark in the array
 function printQuestionMarks(num) {
   var arr = [];
+
   for (var i = 0; i < num; i++) {
     arr.push("?");
   }
@@ -12,6 +13,7 @@ function printQuestionMarks(num) {
 //function sending the object to the mysql database
 function objToSql(ob) {
   var arr = [];
+  
   for (var key in ob) {
     arr.push(key + "=" + ob[key]);
   }
